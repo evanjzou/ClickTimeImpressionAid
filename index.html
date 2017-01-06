@@ -8,7 +8,28 @@
     <body>
         <div>Content of the document...... </div>
         <button onclick="test()">Test</button>
+        <br />
+        <div>Select mode of transportation: </div>
+        <select>
+            <option value="WALKING">Walking</option>
+            <option value="BICYCLING">Bicycling</option>
+            <option value="TRANSIT">Public transportaion</option>
+        </select>
+        <div id="map"></div>
+        <button onclick="locateMe()">Test Geolocation</button>
+        <button onclick="search()">Test search</button>
+        <p id="nearby"></p>
+        <p id="directions"></p>
+        <p id="dist"></p>
+        <p id="time"></p>
+        <p id="copyright"></p>
     </body>
 
-    <script src="./main.js"/>
+    <script src="./main.js"></script>
+    
+    <script async defer type="text/javascript" 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUOjLU-8kAIFdj-Zz_WkUvDlVthhrKAxY&libraries=places&callback=initMap">
+    </script>
+
+    <!--AIzaSyBUOjLU-8kAIFdj-Zz_WkUvDlVthhrKAxY -->
 </html> 
