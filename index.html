@@ -2,26 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Title of the document</title>
+        <title>ClickTime Impression Aid</title>
     </head>
 
     <body>
-        <div>Content of the document...... </div>
-        <button onclick="test()">Test</button>
+        <br/>
+        <div>This is basic application designed to help you navigate from your current location to the ClickTime headquarters while picking up coffee and donuts on the way</div>
+        <br/>
+        <br/>
         <br />
         <div>Select mode of transportation: </div>
-        <select>
+        <select id="mode">
             <option value="WALKING">Walking</option>
             <option value="BICYCLING">Bicycling</option>
             <option value="TRANSIT">Public transportaion</option>
         </select>
+        <br/>
         <div id="map"></div>
-        <button onclick="locateMe()">Test Geolocation</button>
-        <button onclick="search()">Test search</button>
-        <p id="nearby"></p>
-        <p id="directions"></p>
+        <br/>
+        <button onclick="search()">   Direct me to ClickTime!   </button>
+        <p id="store"></p>
         <p id="dist"></p>
         <p id="time"></p>
+        <p id="directions"></p>
         <p id="copyright"></p>
     </body>
 

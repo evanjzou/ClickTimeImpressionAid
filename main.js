@@ -155,9 +155,9 @@ function displayDirections(directions) {
         }
     }
     document.getElementById("directions").innerHTML = displayStr;
-    document.getElementById("dist").innerHTML = "Total distance is: " +
+    document.getElementById("dist").innerHTML = "Total distance you will travel is: " +
     routeDistance(directions.routes[0]) + " meters";
-    document.getElementById("time").innerHTML = "Total time is: " +
+    document.getElementById("time").innerHTML = "Total travel time neglecting traffic and purchase time is: " +
     routeTime(directions.routes[0]) + " seconds";
     document.getElementById("copyright").innerHTML = 
         directions.routes[0].copyrights;
@@ -233,9 +233,22 @@ function createSearchRequest(distance, afford) {
  */
 function search() {
     var req = createSearchRequest(3000, 4);
+    resetInfo();
+    document.getElementById("directions").innerHTML = "Searching...";
     service = new google.maps.places.PlacesService(map);
     //google.maps.Place alert ("Succesfully created service")
     service.nearbySearch(req, calculateRoute);
+}
+
+/**
+ * resetInfo() resets the information from previous direction queries 
+ */
+function resetInfo() {
+    document.getElementById("store").innerHTML = "";
+    document.getElementById("dist").innerHTML = "";
+    document.getElementById("time").innerHTML = "";
+    document.getElementById("directions").innerHTML = "";
+    document.getElementById("copyright").innerHTML = "";
 }
 
 /**
@@ -283,10 +296,10 @@ function handleSearchError(status) {
  * status: a valid google.maps.places.PlacesServiceStatus
  */
 function calculateRoute(result, status) {
-    var routes = [];
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         var req = createDirectionsRequest(myLoc, CLICKTIME_ADDRESS, 
         getTravelMode(), [createWaypoint(result[0])]);
+        setStoreInfo(result[0]);
         var directions = getDirections(req);
     }
     else handleSearchError(status);
@@ -315,5 +328,26 @@ function createWaypoint(res) {
  * getTravelMode() returns the selected travel mode
  */
 function getTravelMode() {
-    return google.maps.DirectionsTravelMode.WALKING //To be changed
+    var selection = document.getElementById("mode").value;
+    switch (selection) {
+        case "WALKING" : 
+            return google.maps.DirectionsTravelMode.WALKING;
+        case "BICYCLING" :
+            return google.maps.DirectionsTravelMode.BICYCLING;
+        default :
+            return google.maps.DirectionsTravelMode.TRANSIT;
+    }
+}
+
+/**
+ * setStoreInfo() sets the html element with id "store" describing the 
+ * store where donuts and coffee can be bought.
+ * 
+ * Requires:
+ * 
+ * store is a valid google.maps.places.PlaceResult object
+ */
+function setStoreInfo(store) {
+    document.getElementById("store").innerHTML = 
+        "You can pick up donuts and coffee for the dev team at " + store.name + ", which is the first listed destination. The second destination will be ClickTime Headquarters.";
 }
