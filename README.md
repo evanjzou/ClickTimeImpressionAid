@@ -16,3 +16,5 @@ for this application to function properly.
 * The coffee/donut shop selected by the application is the closest one to ClickTime headquarters
 as determined by the Google Places API NearbySearch service. This method was chosen to 
 minimize travel time while carrying precious cargo.
+* Attempting to use obtain Public Transportation directions from a larger distance away from 
+ClickTime Headquarters may result in a failure.

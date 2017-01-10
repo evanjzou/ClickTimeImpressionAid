@@ -122,9 +122,16 @@ function handleDirectionError(status) {
         case google.maps.DirectionsStatus.OVER_QUERY_LIMIT :
             alert ("Exceeded API Key query limit. Denied");
             break;
+        case google.maps.DirectionsStatus.INVALID_REQUEST :
+            alert ("Invalid request");
+            break;
+        case google.maps.DirectionsStatus.REQUEST_DENIED :
+            alert ("Request denied");
+            break;
         default :
-            alert ("Failure");
+            alert ("Directions Service failure");
     }
+    document.getElementById("directions").innerHTML = "Directions Service failed";
 }
 
 /**
@@ -132,8 +139,8 @@ function handleDirectionError(status) {
  */
 function test () {
     locateMe();
-    var req = createDirectionsRequest(myLoc, CLICKTIME_ADDRESS, 
-    google.maps.DirectionsTravelMode.DRIVING, []);
+    var req = createDirectionsRequest("1600 Amphitheatre Parkway, Mountain View, California 94043", CLICKTIME_ADDRESS, 
+    google.maps.DirectionsTravelMode.TRANSIT, []);
     getDirections(req);
 }
 
