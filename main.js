@@ -21,6 +21,7 @@ function initMap () {
           zoom: 4,
           center: SF_LAT_LNG
         });
+    alert("For this application to work, you must enable geolocation");
 }
 
 /**
@@ -155,10 +156,8 @@ function displayDirections(directions) {
         }
     }
     document.getElementById("directions").innerHTML = displayStr;
-    document.getElementById("dist").innerHTML = "Total distance you will travel is: " +
-    routeDistance(directions.routes[0]) + " meters";
-    document.getElementById("time").innerHTML = "Total travel time neglecting traffic and purchase time is: " +
-    routeTime(directions.routes[0]) + " seconds";
+    dispDistance(directions.routes[0]);
+    dispTime(routeTime(directions.routes[0]));
     document.getElementById("copyright").innerHTML = 
         directions.routes[0].copyrights;
 }
@@ -350,4 +349,41 @@ function getTravelMode() {
 function setStoreInfo(store) {
     document.getElementById("store").innerHTML = 
         "You can pick up donuts and coffee for the dev team at " + store.name + ", which is the first listed destination. The second destination will be ClickTime Headquarters.";
+}
+
+/**
+ * dispTime() sets the html element with id "time" to the correctly formatted time
+ * 
+ * Requires:
+ * 
+ * secs: the time to be displayed in seconds
+ */
+function dispTime(secs) {
+    var current_date = new Date();
+    var date = new Date(current_date.getTime() + (secs * 1000));
+    document.getElementById("time").innerHTML = "Neglecting traffic and time spent during purchase, your arrival date/time will be: " +
+    date.toString();
+}
+
+/**
+ * metersToMiles() converts a distance in meters to miles
+ * 
+ * Requires:
+ * 
+ * meters: distance in meters >= 0
+ */
+function metersToMiles(meters) {
+    return meters * 0.00062137;
+}
+
+/**
+ * dispDistance() sets the html element with id "dist" to display the distance of the route.
+ * 
+ * Requires: 
+ * 
+ * route: a valid google.maps.DirectionsRoute
+ */
+function dispDistance(route) {
+    document.getElementById("dist").innerHTML = "Total distance you will travel is: " +
+    Math.round(metersToMiles(routeDistance(route))) + " miles";
 }
